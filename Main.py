@@ -3,13 +3,13 @@ import random
 import sys
 import math
 
-print("Привет всем!")
-print("Крылов здесь уже был. А ты???")
-print("Илья здесь")
-print("Еще строка на пробу от Ильи")
+pygame.init()
+win = pygame.display.set_mode((1280,720))
+game_started = True
+while game_started:
 
-print("test")
-print ("Волоха наконец-то здесь")
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game_started = False
 
-print("TEST")
-print('Олег')
+pygame.quit()
