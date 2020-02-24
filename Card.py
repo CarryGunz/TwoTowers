@@ -5,8 +5,8 @@ import Player
 class Card:
     def __init__(self):
         self.price = 0
-        self.sprite = Sprite()
-        self.owner = Player()
+        self.sprite = Sprite.Sprite()
+        self.owner = Player.Player()
 
     def useCard(self):
         pass
