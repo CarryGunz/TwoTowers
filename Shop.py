@@ -4,3 +4,8 @@
 #   Стоимость - cost_card
 #   Изображение магазина с картами
 #   Продажа карт - sell_card
+import pygame as p
+import random as r
+import sys
+import math as m
+
