@@ -1,12 +1,12 @@
-import Sprite as Sp
-import Player as Pl
+import Sprite
+import Player
 
 
 class Card:
     def __init__(self):
         self.price = 0
-        self.sprite = Sp.Sprite()
-        self.owner = Pl.Player()
+        self.sprite = Sprite.Sprite()
+        self.owner = Player.Player()
 
     def useCard(self):
         pass
