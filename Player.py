@@ -7,6 +7,7 @@ class Player:
         self.buildings = []
         self.player_gold = 0
         self.shop = _shop
+        self.turnIncome = 1
 
     def lose(self):
         pass
