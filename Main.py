@@ -5,13 +5,13 @@ import math
 import Player
 import Tower
 import Shop
+import Card
 
 #Consts
 WindowHeight = 1280
 WindowWidth = 720
 
 #Menu
-gameBoard = pygame.image.load('images/gameBoard.png')
 menuImage = pygame.image.load('images/menuImage.png')
 playButton = pygame.image.load('images/playButton.png')
 settingsButton = pygame.image.load('images/settingsButton.png')
@@ -20,6 +20,8 @@ quitButton = pygame.image.load('images/quitButton.png')
 #Game
 towerSprite = None     #...
 shopSprite = None     #...
+gameBoard = pygame.image.load('images/gameBoard.png')
+#Cards makes their own sprites by their own
 
 class State:
     def __init__(self):
@@ -46,14 +48,22 @@ class Game(State):
         pass
 
     def show(self):
-        win.fill((100, 100, 100))
-        card_width = 75
-        card_gap = 15 - len(player.cards)
-        top_offset = 500
-        left_offset = 200
-        for x in range(0, len(player.cards)):
-            pygame.draw.rect(win, (50, 100, 150), pygame.Rect(left_offset + x*(card_width + card_gap), top_offset, card_width, 150))
-            x+=1
+        #background
+        win.blit(gameBoard, (0, 0))
+        #some intervals
+        card_interval = 8 - len(player.cards)
+        top_offset = 568 #568 px to card panel from top on  gameBoard.png
+        left_offset = 206 + 870/2 #206 px from left to card panel on picture, 870 px is width of card panel on picture (picture: gameBoard.png)
+        #make intervals beautiful
+        if (len(player.cards) > 0):
+            left_offset -= player.cards[0].sprite.image.get_width()/2 * (len(player.cards))
+        #cycle to place and show cards
+        x = 0
+        for card in player.cards:
+            card.sprite.x = left_offset + x*(card_interval + card.sprite.image.get_width())
+            card.sprite.y = top_offset
+            win.blit(card.sprite.image, (left_offset + x*(card_interval + card.sprite.image.get_width()), top_offset))
+            x += 1
         pygame.display.flip()
         pygame.display.update()
 
@@ -65,16 +75,10 @@ player = Player.Player("abc", shop)
 tower = Tower.Tower(player, towerSprite)
 player.getTower(tower)
 
-player.cards = [None]*10
+player.cards = [Card.Card(player)]*5
 
 pygame.init()
 win = pygame.display.set_mode((WindowHeight, WindowWidth))
-
-
-def drawGame():
-    win.blit(gameBoard, (0,0))
-    pygame.display.update()
-
 
 def main():
     game_started = True

@@ -1,12 +1,13 @@
 import Sprite
 import Player
+import pygame
 
 
 class Card:
-    def __init__(self):
+    def __init__(self, owner):
         self.price = 0
-        self.sprite = Sprite.Sprite()
-        self.owner = Player.Player()
+        self.sprite = Sprite.Sprite(pygame.image.load('images/testCard.png'))
+        self.owner = owner
 
     def useCard(self):
         pass
