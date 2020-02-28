@@ -10,27 +10,50 @@ playButton = pygame.image.load('images/playButton.png')
 settingsButton = pygame.image.load('images/settingsButton.png')
 quitButton = pygame.image.load('images/quitButton.png')
 
-class Menu:
+
+class State:
     def __init__(self):
         pass
-    def showMenu(self):
+
+    def show(self):
+        pass
+
+
+class Menu(State):
+    def __init__(self):
+        pass
+
+    def show(self):
         win.blit(menuImage, (0,0))
         win.blit(playButton, (456,200))
         win.blit(settingsButton, (456, 350))
         win.blit(quitButton, (456, 500))
         pygame.display.update()
+
+
+class Game(State):
+    def __init__(self):
+        pass
+
+    def show(self):
+        pass
+
+
+current_state = Menu
 player = Player
-main_menu = Menu
 pygame.init()
 win = pygame.display.set_mode((1280,720))
+
 
 def drawGame():
     win.blit(gameBoard, (0,0))
     pygame.display.update()
+
+
 def main():
     game_started = True
     while game_started:
-        main_menu.showMenu(main_menu)
+        current_state.show(current_state)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_started = False
