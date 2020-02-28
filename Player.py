@@ -1,8 +1,9 @@
+import Tower
 class Player:
-    def __init__(self, _name, _tower, _shop):
+    def __init__(self, _name, _shop):
         self.name = _name
         self.game_score = 0
-        self.tower = _tower
+        self.tower = None
         self.cards = []
         self.buildings = []
         self.player_gold = 0
@@ -11,8 +12,11 @@ class Player:
 
     def lose(self):
         pass
+
     def win(self):
         pass
 
+    def getTower(self, tower):
+        self.tower = tower
 
 
