@@ -6,6 +6,7 @@ import Player
 import Tower
 import Shop
 import Card
+import time
 
 #Consts
 WindowHeight = 1280
@@ -40,8 +41,38 @@ class Menu(State):
         win.blit(playButton, (456,200))
         win.blit(settingsButton, (456, 350))
         win.blit(quitButton, (456, 500))
+        # win.blit(text_timer, (620, 35)) # отображение таймера
         pygame.display.update()
+    def timerGame(self): # таймер на десятки минут и секунды
+        frame_count = 0
+        start_timer = "1 5. 0" # стартовое время
 
+        while True:
+            pygame.time.Clock().tick(60)
+            frame_count += 1
+
+            hour = int(start_timer[0])
+            minute = int(start_timer[2])
+            second = int(start_timer[5])
+
+            if second > 0 and frame_count == 20:
+                frame_count = 0
+                second -= 1
+            if second == 0 and minute > 0 and frame_count == 20:
+                frame_count = 0
+                second = 9
+                minute -= 1
+            if minute == 0 and hour > 0 and frame_count == 20:
+                frame_count = 0
+                minute = 9
+                second = 9
+                hour -= 1
+
+            start_timer = str(hour) + " " + str(minute) + ". " + str(second)
+            red = (255, 0, 0)
+            font = pygame.font.SysFont('DS-Digital', 50, False, False)
+            text_timer = font.render(start_timer, True, red)
+            win.blit(text_timer, (620, 35))  # отображение таймера
 
 class Game(State):
     def __init__(self):
@@ -68,6 +99,8 @@ class Game(State):
         pygame.display.update()
 
 
+
+
 current_state = Menu()
 shop = Shop.Shop(shopSprite)
 
@@ -79,6 +112,9 @@ player.cards = [Card.Card(player)]*5
 
 pygame.init()
 win = pygame.display.set_mode((WindowHeight, WindowWidth))
+
+
+
 
 def main():
     game_started = True
