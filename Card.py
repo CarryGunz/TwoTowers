@@ -13,6 +13,7 @@ class Card:
         pass
 
     def movableImg(self, screen):
+
         isDragging = False
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
