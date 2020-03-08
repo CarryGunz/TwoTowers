@@ -12,6 +12,24 @@ class Card:
     def useCard(self):
         pass
 
+    def movableImg(self, screen):
+        isDragging = False
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+
+
+        if click[0] == 1 and self.sprite.x + self.sprite.width > mouse[0] > self.sprite.x and self.sprite.y + self.sprite.height > mouse[
+            1] > self.sprite.y:
+            isDragging = True
+
+        if click[0] == 0:
+            isDragging = False
+
+        if isDragging == True:
+            self.sprite.x = mouse[0] - (self.sprite.width / 2)
+            self.sprite.y = mouse[1] - (self.sprite.height / 2)
+        
 
 #--------
 
