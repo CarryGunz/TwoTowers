@@ -86,11 +86,11 @@ player = Player.Player("abc", shop)
 tower = Tower.Tower(player, towerSprite)
 player.getTower(tower)
 
-player.cards.append(Card.Card(player))
-player.cards.append(Card.Card(player))
-player.cards.append(Card.Card(player))
-player.cards.append(Card.Card(player))
-player.cards.append(Card.Card(player))
+player.cards.append(Card.Card(player, 1))
+player.cards.append(Card.Card(player, 2))
+player.cards.append(Card.Card(player, 3))
+player.cards.append(Card.Card(player, 4))
+player.cards.append(Card.Card(player, 5))
 class Game(State):
     def __init__(self):
         self.current_state = 1
@@ -131,8 +131,6 @@ class Game(State):
 
 
 
-
-
 pygame.init()
 win = pygame.display.set_mode((WindowHeight, WindowWidth))
 
@@ -144,21 +142,19 @@ def main():
         game_state.show()
 
         for event in pygame.event.get():
-
+            for card in player.cards:
+                card.movableImg(win)
             if event.type == pygame.QUIT:
                 game_started = False
             if event.type == pygame.MOUSEBUTTONDOWN:
+
                 if event.button == 1:
-
-                    for card in player.cards:
-                        print(card.sprite.x, card.sprite.y)
-                        card.movableImg(win)
-
                     if game_state.current_state == 0:
                         game_state.checkButtonClick()
                         if game_state.current_state == 1:
                             game_state = Game()
                             game_state.placeCards()
+
 
 
 
