@@ -6,6 +6,7 @@ import Player
 import Tower
 import Shop
 import Card
+import AI
 import time
 
 WindowHeight = 1280
@@ -83,8 +84,10 @@ class Menu(State):
 game_state = Menu()
 shop = Shop.Shop(shopSprite)
 player = Player.Player("abc", shop)
-tower = Tower.Tower(player, towerSprite)
-player.getTower(tower)
+player.tower = Tower.Tower(player, towerSprite)
+
+computer = AI.AI()
+computer.tower = Tower.Tower(computer, towerSprite)
 
 player.cards.append(Card.Card(player, 1))
 player.cards.append(Card.Card(player, 2))
@@ -124,8 +127,29 @@ class Game(State):
         win.blit(gameBoard, (0, 0))
 
         self.showCards()
+        self.showPlayersStats()
         pygame.display.flip()
         pygame.display.update()
+    def showPlayersStats(self):
+        #Создание шрифтов для вывода текста
+        white = (255,255,255)
+        font = pygame.font.Font('freesansbold.ttf', 22)
+        font2 = pygame.font.Font('freesansbold.ttf', 18)
+
+        #Вывод информации о игроке
+        player1_name = font.render('Ваша башня', True, white)
+        player1_hp = font2.render('Прочность: ' + str(player.tower.height), True, white)
+        win.blit(player1_name, (35, 580))
+        win.blit(player1_hp, (36, 620))
+
+        # Вывод информации о компьютере
+        AI_name = font.render('Компьютер', True, white)
+        AI_hp = font2.render('Прочность: ' + str(computer.tower.height), True, white)
+        win.blit(AI_name, (1110, 580))
+        win.blit(AI_hp, (1111, 620))
+
+
+
 
 
 
@@ -142,6 +166,7 @@ def main():
         game_state.show()
 
         for event in pygame.event.get():
+
             for card in player.cards:
                 card.movableImg(win)
             if event.type == pygame.QUIT:
@@ -154,6 +179,7 @@ def main():
                         if game_state.current_state == 1:
                             game_state = Game()
                             game_state.placeCards()
+
 
 
 

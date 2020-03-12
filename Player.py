@@ -16,7 +16,5 @@ class Player:
     def win(self):
         pass
 
-    def getTower(self, tower):
-        self.tower = tower
 
 
