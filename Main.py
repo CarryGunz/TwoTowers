@@ -7,7 +7,10 @@ import Tower
 import Shop
 import Card
 import AI
+import AllCards
 import time
+import copy
+import Sprite
 
 WindowHeight = 1280
 WindowWidth = 720
@@ -17,14 +20,28 @@ playButton = pygame.image.load('images/playButton.png')
 settingsButton = pygame.image.load('images/settingsButton.png')
 quitButton = pygame.image.load('images/quitButton.png')
 
-
 towerSprite = None
 shopSprite = None
 gameBoard = pygame.image.load('images/gameBoard.png')
 
+shop = Shop.Shop(shopSprite)
+player = Player.Player("abc", shop)
+player.tower = Tower.Tower(player, towerSprite)
+
+computer = AI.AI(shop)
+computer.tower = Tower.Tower(computer, towerSprite)
+# -----------------------
+
+all_cards = []
+card1 = Card.Card(Sprite.Sprite(pygame.image.load('images/BallistaShot.png')), player, computer)
+card1.attributes.append(Card.addAttackAttribute(card1.opponent.tower, 4))
+
+all_cards.append(card1)
+
 
 class State:
     current_state = 0
+
     def __init__(self):
         pass
 
@@ -32,9 +49,9 @@ class State:
         pass
 
 
-def timerGame(): # таймер на десятки минут и секунды
+def timerGame():  # таймер на десятки минут и секунды
     frame_count = 0
-    start_timer = "1 5. 0" # стартовое время
+    start_timer = "1 5. 0"  # стартовое время
 
     while True:
         pygame.time.Clock().tick(60)
@@ -63,13 +80,14 @@ def timerGame(): # таймер на десятки минут и секунды
         text_timer = font.render(start_timer, True, red)
         win.blit(text_timer, (620, 35))  # отображение таймера
 
+
 class Menu(State):
     def __init__(self):
         pass
 
     def show(self):
-        win.blit(menuImage, (0,0))
-        win.blit(playButton, (456,200))
+        win.blit(menuImage, (0, 0))
+        win.blit(playButton, (456, 200))
         win.blit(settingsButton, (456, 350))
         win.blit(quitButton, (456, 500))
 
@@ -81,19 +99,25 @@ class Menu(State):
         if 200 < m_y < 330 and 456 < m_x < 700:
             self.current_state = 1
 
+
 game_state = Menu()
-shop = Shop.Shop(shopSprite)
-player = Player.Player("abc", shop)
-player.tower = Tower.Tower(player, towerSprite)
 
-computer = AI.AI()
-computer.tower = Tower.Tower(computer, towerSprite)
+player.cards.append(copy.copy(card1))
+Card.Card.getNewCardNum(Card.Card)
 
-player.cards.append(Card.Card(player, 1))
-player.cards.append(Card.Card(player, 2))
-player.cards.append(Card.Card(player, 3))
-player.cards.append(Card.Card(player, 4))
-player.cards.append(Card.Card(player, 5))
+player.cards.append(copy.copy(card1))
+Card.Card.getNewCardNum(Card.Card)
+
+player.cards.append(copy.copy(card1))
+Card.Card.getNewCardNum(Card.Card)
+
+player.cards.append(copy.copy(card1))
+Card.Card.getNewCardNum(Card.Card)
+
+player.cards.append(copy.copy(card1))
+Card.Card.getNewCardNum(Card.Card)
+
+
 class Game(State):
     def __init__(self):
         self.current_state = 1
@@ -101,10 +125,7 @@ class Game(State):
 
     def showCards(self):
         for card in player.cards:
-
             win.blit(card.sprite.image, (card.sprite.x, card.sprite.y))
-
-
 
     def placeCards(self):
         global player
@@ -121,8 +142,6 @@ class Game(State):
             card.sprite.y = top_offset
             x += 1
 
-
-
     def show(self):
         win.blit(gameBoard, (0, 0))
 
@@ -130,13 +149,14 @@ class Game(State):
         self.showPlayersStats()
         pygame.display.flip()
         pygame.display.update()
+
     def showPlayersStats(self):
-        #Создание шрифтов для вывода текста
-        white = (255,255,255)
+        # Создание шрифтов для вывода текста
+        white = (255, 255, 255)
         font = pygame.font.Font('freesansbold.ttf', 22)
         font2 = pygame.font.Font('freesansbold.ttf', 18)
 
-        #Вывод информации о игроке
+        # Вывод информации о игроке
         player1_name = font.render('Ваша башня', True, white)
         player1_hp = font2.render('Прочность: ' + str(player.tower.height), True, white)
         win.blit(player1_name, (35, 580))
@@ -149,14 +169,9 @@ class Game(State):
         win.blit(AI_hp, (1111, 620))
 
 
-
-
-
-
-
-
 pygame.init()
 win = pygame.display.set_mode((WindowHeight, WindowWidth))
+
 
 def main():
     global game_state
@@ -179,11 +194,6 @@ def main():
                         if game_state.current_state == 1:
                             game_state = Game()
                             game_state.placeCards()
-
-
-
-
-
 
 
 main()
