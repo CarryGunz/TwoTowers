@@ -24,20 +24,25 @@ towerSprite = None
 shopSprite = None
 gameBoard = pygame.image.load('images/gameBoard.png')
 
-shop = Shop.Shop(shopSprite)
-player = Player.Player("abc", shop)
-player.tower = Tower.Tower(player, towerSprite)
 
+shop = Shop.Shop(shopSprite)
 computer = AI.AI(shop)
 computer.tower = Tower.Tower(computer, towerSprite)
-# -----------------------
+
+player = Player.Player("abc", shop, computer)
+player.tower = Tower.Tower(player, towerSprite)
+
+
+# -----------------------Cards
 
 all_cards = []
-card1 = Card.Card(Sprite.Sprite(pygame.image.load('images/BallistaShot.png')), player, computer)
-card1.attributes.append(Card.addAttackAttribute(card1.opponent.tower, 4))
+
+card_effect1 = Card.CardEffect(player, 4, Card.addAttackEffect)
+card1 = Card.Card(Sprite.Sprite(pygame.image.load('images/BallistaShot.png')), player)
+card1.addCardEffect(card_effect1)
 
 all_cards.append(card1)
-
+# -------------------
 
 class State:
     current_state = 0
@@ -103,19 +108,19 @@ class Menu(State):
 game_state = Menu()
 
 player.cards.append(copy.copy(card1))
-Card.Card.getNewCardNum(Card.Card)
+player.cards[-1].card_num = Card.Card.getNewCardNum(Card.Card)
 
 player.cards.append(copy.copy(card1))
-Card.Card.getNewCardNum(Card.Card)
+player.cards[-1].card_num = Card.Card.getNewCardNum(Card.Card)
 
 player.cards.append(copy.copy(card1))
-Card.Card.getNewCardNum(Card.Card)
+player.cards[-1].card_num = Card.Card.getNewCardNum(Card.Card)
 
 player.cards.append(copy.copy(card1))
-Card.Card.getNewCardNum(Card.Card)
+player.cards[-1].card_num = Card.Card.getNewCardNum(Card.Card)
 
 player.cards.append(copy.copy(card1))
-Card.Card.getNewCardNum(Card.Card)
+player.cards[-1].card_num = Card.Card.getNewCardNum(Card.Card)
 
 
 class Game(State):
@@ -138,6 +143,7 @@ class Game(State):
 
         x = 0
         for card in player.cards:
+            print(card.sprite.x, card.sprite.y)
             card.sprite.x = left_offset + x * (card_interval + card.sprite.image.get_width())
             card.sprite.y = top_offset
             x += 1
@@ -183,11 +189,12 @@ def main():
         for event in pygame.event.get():
 
             for card in player.cards:
-                card.movableImg(win)
+                if card.movableImg():
+                    player.cards.remove(card)
             if event.type == pygame.QUIT:
                 game_started = False
             if event.type == pygame.MOUSEBUTTONDOWN:
-
+                print(len(player.cards))
                 if event.button == 1:
                     if game_state.current_state == 0:
                         game_state.checkButtonClick()

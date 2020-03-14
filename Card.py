@@ -2,26 +2,40 @@ import Sprite
 import Player
 import pygame
 
+class CardEffect:
+    def __init__(self, owner, effect_power, effect):
+        self.owner = owner
+        self.effect_power = effect_power
+        self.effect = effect
+    def activateEffect(self):
+        self.effect(self.owner, self.effect_power)
+
 
 class Card:
     taken_card_num = None
     cards_count = 0
 
-    def __init__(self, sprite_, owner_, opponent_):
+    def __init__(self, sprite, owner):
         self.price = 0
-        self.sprite = sprite_
+        self.sprite = sprite
         self.card_num = Card.cards_count
-        self.attributes = []
-        self.owner = owner_
-        self.opponent = opponent_
-        self.getNewCardNum()
+        self.effects = []
+        self.owner = owner
+        self.damage = 0
+        self.repair_power = 0
+
+
+
 
     def useCard(self):
-        for func in self.attributes:
-            func()
+        for effect in self.effects:
+            effect.activateEffect()
+
+    def addCardEffect(self, card_effect):
+        self.effects.append(card_effect)
 
 
-    def movableImg(self, screen):
+    def movableImg(self):
 
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -31,8 +45,9 @@ class Card:
             1] > self.sprite.y and Card.taken_card_num is None:
             Card.taken_card_num = self.card_num
 
-        elif click[0] == 0 and 200 < mouse[1] < 600 and Card.taken_card_num is not None:
+        elif click[0] == 0 and 100 < mouse[1] < 600 and Card.taken_card_num is not None:
             self.useCard()
+            return True
         elif click[0] == 0:
             Card.taken_card_num = None
         if Card.taken_card_num == self.card_num:
@@ -46,13 +61,17 @@ class Card:
 
 # --------
 
-def addAttackAttribute(tower, damage):
-    tower.height = tower.height - damage
+
+def addAttackEffect(owner, damage):
+    owner.opponent.tower.height = owner.opponent.tower.height - damage
 
 
-def addRepairAttribute(tower, repair_number):
-    tower.height = tower.height + repair_number
+def addRepairEffect(owner, repair_effect):
+    owner.tower.height = owner.tower.height + repair_effect
 
+#Сделать...
+def addCreateBuildingEffect(owner, building_type):
+    pass
 
 class AttackCard(Card):
     def useCard(self):
