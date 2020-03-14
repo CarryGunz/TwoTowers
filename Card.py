@@ -18,7 +18,6 @@ class Card:
     def __init__(self, sprite, owner):
         self.price = 0
         self.sprite = sprite
-        self.card_num = Card.cards_count
         self.effects = []
         self.owner = owner
         self.damage = 0
@@ -34,12 +33,31 @@ class Card:
     def addCardEffect(self, card_effect):
         self.effects.append(card_effect)
 
+    def isClick(self):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if click[0] == 1 and self.sprite.x + self.sprite.width > mouse[0] > self.sprite.x and self.sprite.y + self.sprite.height > mouse[1] > self.sprite.y:
+            return True
+        else:
+            return False
+
+    def move(self):
+        mouse = pygame.mouse.get_pos()
+        x_center = self.sprite.width/2
+        y_center = self.sprite.height/2
+
+        self.sprite.x = mouse[0] - x_center
+        self.sprite.y = mouse[1] - y_center
+
+
 
     def movableImg(self):
 
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
+        #
         if click[0] == 1 and self.sprite.x + self.sprite.width > mouse[
             0] > self.sprite.x and self.sprite.y + self.sprite.height > mouse[
             1] > self.sprite.y and Card.taken_card_num is None:
@@ -53,9 +71,6 @@ class Card:
         if Card.taken_card_num == self.card_num:
             self.sprite.x = mouse[0] - (self.sprite.width / 2)
             self.sprite.y = mouse[1] - (self.sprite.height / 2)
-    def getNewCardNum(self):
-        Card.cards_count = Card.cards_count + 1
-        return Card.cards_count
 
 
 
