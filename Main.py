@@ -99,15 +99,21 @@ class Game(State):
         self.all_cards.append(card1)
         self.player.cards.append(card1)
 
-        card_effect1 = Card.CardEffect(self.player, 4, Card.addAttackEffect)
-        card1 = Card.Card(Sprite.Sprite(pygame.image.load('images/cheapCardPattern.png')), self.player)
-        card1.addCardEffect(card_effect1)
+        card_effect2 = Card.CardEffect(self.player, 3, Card.addRepairEffect)
+        card1 = Card.Card(Sprite.Sprite(pygame.image.load('images/WoodenBarricades.png')), self.player)
+        card1.addCardEffect(card_effect2)
         self.all_cards.append(card1)
         self.player.cards.append(card1)
 
-        card_effect1 = Card.CardEffect(self.player, 4, Card.addAttackEffect)
-        card1 = Card.Card(Sprite.Sprite(pygame.image.load('images/BallistaShot.png')), self.player)
-        card1.addCardEffect(card_effect1)
+        card_effect3 = Card.CardEffect(self.player, 7, Card.addAttackEffect)
+        card1 = Card.Card(Sprite.Sprite(pygame.image.load('images/CatapultShot.png')), self.player)
+        card1.addCardEffect(card_effect3)
+        self.all_cards.append(card1)
+        self.player.cards.append(card1)
+
+        card_effect4 = Card.CardEffect(self.player, 5, Card.addRepairEffect)
+        card1 = Card.Card(Sprite.Sprite(pygame.image.load('images/LightFortification.png')), self.player)
+        card1.addCardEffect(card_effect4)
         self.all_cards.append(card1)
         self.player.cards.append(card1)
         #</Временное>

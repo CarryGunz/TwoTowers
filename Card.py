@@ -37,7 +37,9 @@ class Card:
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
-        if click[0] == 1 and self.sprite.x + self.sprite.width > mouse[0] > self.sprite.x and self.sprite.y + self.sprite.height > mouse[1] > self.sprite.y:
+        if click[0] == 1 and self.sprite.x + self.sprite.width > mouse[0] >\
+                self.sprite.x and self.sprite.y + self.sprite.height >\
+                mouse[1] > self.sprite.y:
             return True
         else:
             return False
