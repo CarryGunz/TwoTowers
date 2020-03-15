@@ -182,6 +182,8 @@ class Game(State):
         if self.card_on_hand != None:
             if TableX + TableWidth > self.card_on_hand.sprite.x > TableX and TableY + TableHeight > self.card_on_hand.sprite.y > TableY:
                 self.card_on_hand.useCard()
+                self.all_cards.remove(self.card_on_hand)
+                self.card_on_hand.owner.cards.remove(self.card_on_hand)
             self.card_on_hand = None
 
     #Двигает карту на руке
