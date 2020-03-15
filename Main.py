@@ -92,7 +92,6 @@ class Game(State):
         # </Cards>
 
         #<Временное>
-
         card_effect1 = Card.CardEffect(self.player, 4, Card.addAttackEffect)
         card1 = Card.Card(Sprite.Sprite(pygame.image.load('images/BallistaShot.png')), self.player)
         card1.addCardEffect(card_effect1)
