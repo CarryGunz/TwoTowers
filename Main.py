@@ -15,6 +15,10 @@ import Sprite
 #Константы
 WindowHeight = 1280
 WindowWidth = 720
+TableX = 211
+TableY = 124
+TableWidth = 858
+TableHeight = 397
 
 
 class State:
@@ -162,17 +166,20 @@ class Game(State):
                 card.sprite.y = top_offset
                 x += 1
 
-
+    #Проверяет, взята ли карта
     def checkCardsOnClick(self):
         for card in self.player.cards:
             if card.isClick() and (self.card_on_hand == None):
                 self.card_on_hand = card
 
+    #Убирает карту из руки
     def dropCard(self):
         if self.card_on_hand != None:
-            self.card_on_hand.useCard()
+            if TableX + TableWidth > self.card_on_hand.sprite.x > TableX and TableY + TableHeight > self.card_on_hand.sprite.y > TableY:
+                self.card_on_hand.useCard()
             self.card_on_hand = None
 
+    #Двигает карту на руке
     def moveCardOnHand(self):
         if self.card_on_hand != None:
             self.card_on_hand.move()
