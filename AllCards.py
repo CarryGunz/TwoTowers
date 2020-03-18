@@ -1,5 +1,4 @@
 import Card
-import Main
 import Sprite
 import pygame
 

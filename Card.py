@@ -1,14 +1,19 @@
 import Sprite
 import Player
 import pygame
-
+import copy
 class CardEffect:
     def __init__(self, owner, effect_power, effect):
         self.owner = owner
         self.effect_power = effect_power
         self.effect = effect
+
     def activateEffect(self):
         self.effect(self.owner, self.effect_power)
+    def setOwner(self, owner):
+        self.owner = owner
+        self.owner.opponent = owner.opponent
+
 
 
 class Card:
@@ -20,8 +25,7 @@ class Card:
         self.sprite = sprite
         self.effects = []
         self.owner = owner
-        self.damage = 0
-        self.repair_power = 0
+
 
     def useCard(self):
         for effect in self.effects:
@@ -48,7 +52,11 @@ class Card:
 
         self.sprite.x = mouse[0] - x_center
         self.sprite.y = mouse[1] - y_center
-
+    def cloneCard(self):
+        new_card = Card(copy.copy(self.sprite), self.owner)
+        new_card.effects = self.effects
+        new_card.price = self.price
+        return new_card
 
 
 
