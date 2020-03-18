@@ -23,9 +23,6 @@ class Card:
         self.damage = 0
         self.repair_power = 0
 
-
-
-
     def useCard(self):
         for effect in self.effects:
             effect.activateEffect()
@@ -54,25 +51,7 @@ class Card:
 
 
 
-    def movableImg(self):
 
-        mouse = pygame.mouse.get_pos()
-        click = pygame.mouse.get_pressed()
-
-        #
-        if click[0] == 1 and self.sprite.x + self.sprite.width > mouse[
-            0] > self.sprite.x and self.sprite.y + self.sprite.height > mouse[
-            1] > self.sprite.y and Card.taken_card_num is None:
-            Card.taken_card_num = self.card_num
-
-        elif click[0] == 0 and 100 < mouse[1] < 600 and Card.taken_card_num is not None:
-            self.useCard()
-            return True
-        elif click[0] == 0:
-            Card.taken_card_num = None
-        if Card.taken_card_num == self.card_num:
-            self.sprite.x = mouse[0] - (self.sprite.width / 2)
-            self.sprite.y = mouse[1] - (self.sprite.height / 2)
 
 
 
@@ -89,20 +68,6 @@ def addRepairEffect(owner, repair_effect):
 #Сделать...
 def addCreateBuildingEffect(owner, building_type):
     pass
-
-class AttackCard(Card):
-    def useCard(self):
-        pass
-
-
-class RepairCard(Card):
-    def useCard(self):
-        pass
-
-
-class BuildingCard(Card):
-    def useCard(self):
-        pass
 
 
 class SupportCard(Card):

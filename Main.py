@@ -13,12 +13,12 @@ import copy
 import Sprite
 
 #Константы
-WindowHeight = 1280
-WindowWidth = 720
-TableX = 211
-TableY = 124
-TableWidth = 858
-TableHeight = 397
+WINDOW_WIDTH = 1280
+WINDOW_HEIGHT = 720
+TABLE_X = 211
+TABLE_Y = 124
+TABLE_WIDTH = 858
+TABLE_HEIGHT = 397
 
 
 class State:
@@ -73,6 +73,7 @@ class Game(State):
 
         self.player = Player.Player("abc", self.shop, self.computer)
         self.player.tower = Tower.Tower(self.player, self.towerSprite)
+        self.computer.opponent = self.player
         # </GameThings>
 
         # <Cards> Карты
@@ -180,7 +181,7 @@ class Game(State):
     #Убирает карту из руки
     def dropCard(self):
         if self.card_on_hand != None:
-            if TableX + TableWidth > self.card_on_hand.sprite.x > TableX and TableY + TableHeight > self.card_on_hand.sprite.y > TableY:
+            if TABLE_X + TABLE_WIDTH > self.card_on_hand.sprite.x > TABLE_X and TABLE_Y + TABLE_HEIGHT > self.card_on_hand.sprite.y > TABLE_Y:
                 self.card_on_hand.useCard()
                 self.all_cards.remove(self.card_on_hand)
                 self.card_on_hand.owner.cards.remove(self.card_on_hand)
@@ -204,25 +205,29 @@ class Game(State):
     def showPlayersStats(self):
         # Создание шрифтов для вывода текста
         white = (255, 255, 255)
-        font = pygame.font.Font('freesansbold.ttf', 22)
-        font2 = pygame.font.Font('freesansbold.ttf', 18)
+        yellow = (255, 215, 0)
+        font = pygame.font.Font('freesansbold.ttf', 18)
 
         # Вывод информации о игроке
         player1_name = font.render('Ваша башня', True, white)
-        player1_hp = font2.render('Прочность: ' + str(self.player.tower.height), True, white)
+        player1_hp = font.render('Прочность: ' + str(self.player.tower.height), True, white)
+        player1_gold = font.render('Золото: ' + str(self.player.player_gold), True, yellow)
         win.blit(player1_name, (35, 580))
         win.blit(player1_hp, (36, 620))
+        win.blit(player1_gold, (36, 660))
 
         # Вывод информации о компьютере
-        AI_name = font.render('Компьютер', True, white)
-        AI_hp = font2.render('Прочность: ' + str(self.computer.tower.height), True, white)
-        win.blit(AI_name, (1110, 580))
+        AI_name = font.render('Ваш противник', True, white)
+        AI_hp = font.render('Прочность: ' + str(self.computer.tower.height), True, white)
+        AI_gold = font.render('Золото: ' + str(self.computer.player_gold), True, yellow)
+        win.blit(AI_name, (1107, 580))
         win.blit(AI_hp, (1111, 620))
+        win.blit(AI_gold, (1111, 660))
 
 game_state = Menu()
 
 pygame.init()
-win = pygame.display.set_mode((WindowHeight, WindowWidth))
+win = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 
 def main():
