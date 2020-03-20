@@ -52,6 +52,7 @@ class Card:
 
         self.sprite.x = mouse[0] - x_center
         self.sprite.y = mouse[1] - y_center
+
     def cloneCard(self):
         new_card = Card(copy.copy(self.sprite), self.owner)
         new_card.effects = self.effects

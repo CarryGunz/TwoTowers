@@ -55,6 +55,7 @@ class Menu(State):
             game_state = Game()
 
 
+
 class Game(State):
     def __init__(self):
         self.current_state = 2
@@ -62,18 +63,21 @@ class Game(State):
 
         # <Sprites> Спрайты
         self.towerSprite = None
-        self.shopSprite = None
         self.gameBoard = pygame.image.load('images/gameBoard.png')
+
         # </Sprites>
 
         # <GameThings> Разное
-        self.shop = Shop.Shop(self.shopSprite)
+        self.shop = Shop.Shop()
         self.computer = AI.AI(self.shop)
         self.computer.tower = Tower.Tower(self.computer, self.towerSprite)
 
         self.player = Player.Player("abc", self.shop, self.computer)
         self.player.tower = Tower.Tower(self.player, self.towerSprite)
+
         self.computer.opponent = self.player
+        self.shop.player = self.player
+        self.shop.computer = self.computer
         # </GameThings>
 
         # <Cards> Карты
@@ -173,7 +177,7 @@ class Game(State):
 
     def show(self):
         win.blit(self.gameBoard, (0, 0))
-
+        win.blit(self.shop.wooden_button.sprite.image, (250, 40))
         self.placeCards()
         self.showCards()
         self.showPlayersStats()
@@ -206,11 +210,7 @@ class Game(State):
         self.player.cards.append(AllCards.wooden_cards[random.randint(0,1)].cloneCard())
         self.player.cards.append(AllCards.wooden_cards[random.randint(0,1)].cloneCard())
         self.player.cards.append(AllCards.wooden_cards[random.randint(0,1)].cloneCard())
-        self.player.cards[0].owner = self.player
-        self.player.cards[1].owner = self.player
-        self.player.cards[2].owner = self.player
-        for card in self.player.cards:
-            card.effects[0].setOwner(self.player)
+        self.player.setPlayerCardsOwner()
 
 game_state = Menu()
 
@@ -224,6 +224,7 @@ def main():
 
     while game_started:
         game_state.show()
+
 
         pressed = pygame.mouse.get_pressed()
         if not pressed[0]:
@@ -243,6 +244,7 @@ def main():
                     game_state.checkButtonClick()
                 elif game_state.current_state == 2: #Game
                     game_state.checkCardsOnClick()
+                    game_state.shop.wooden_button.isClick()
 
             if event.type == pygame.MOUSEMOTION:
                 if game_state.current_state == 2:  # Game
