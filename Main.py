@@ -40,10 +40,10 @@ class Menu(State):
         self.quitButton = pygame.image.load('images/quitButton.png')
 
     def show(self):
-        win.blit( self.menuImage, (0, 0))
-        win.blit( self.playButton, (456, 200))
-        win.blit( self.settingsButton, (456, 350))
-        win.blit( self.quitButton, (456, 500))
+        win.blit(self.menuImage, (0, 0))
+        win.blit(self.playButton, (456, 200))
+        win.blit(self.settingsButton, (456, 350))
+        win.blit(self.quitButton, (456, 500))
 
         pygame.display.update()
 
@@ -221,6 +221,7 @@ win = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 def main():
     global game_state
     game_started = True
+
 
     while game_started:
         game_state.show()
