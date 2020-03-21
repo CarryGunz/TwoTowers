@@ -27,7 +27,7 @@ class AI:
         self.player_gold = self.player_gold - amount * 4
 
         for i in range(0, amount):
-            self.cards.append(AllCards.silver_cards[random.randint(0, len(AllCards.silver_cards))].cloneCard())
+            self.cards.append(AllCards.silver_cards[random.randint(0, len(AllCards.silver_cards)-1)].cloneCard())
             pass
 
         rest = self.player_gold % 2
@@ -35,7 +35,7 @@ class AI:
         self.player_gold = self.player_gold - amount * 2
 
         for i in range(0, amount):
-            self.cards.append(AllCards.bronze_cards[random.randint(0, len(AllCards.bronze_cards))].cloneCard())
+            self.cards.append(AllCards.bronze_cards[random.randint(0, len(AllCards.bronze_cards)-1)].cloneCard())
             pass
 
         rest = self.player_gold % 1
@@ -43,7 +43,7 @@ class AI:
         self.player_gold = self.player_gold - amount * 1
 
         for i in range(0, amount):
-            self.cards.append(AllCards.wooden_cards[random.randint(0, len(AllCards.wooden_cards))].cloneCard())
+            self.cards.append(AllCards.wooden_cards[random.randint(0, len(AllCards.wooden_cards)-1)].cloneCard())
             pass
 
         #Use cards
