@@ -56,6 +56,11 @@ class Menu(State):
 
 
 
+class GameButton:
+    def __init__(self, sprite, button_x, button_y):
+        self.sprite = sprite
+        self.sprite.x = button_x
+        self.sprite.y = button_y
 class Game(State):
     def __init__(self):
         self.current_state = 2
@@ -79,7 +84,11 @@ class Game(State):
         self.shop.player = self.player
         self.shop.computer = self.computer
         # </GameThings>
+        # <GameButtons>
+        self.end_turn_button = GameButton(Sprite.Sprite(pygame.image.load('images/EndTurnButton.png')), 750, 12)
 
+
+        # </GameButtons>
         # <Cards> Карты
 
         self.all_cards = []
@@ -178,6 +187,7 @@ class Game(State):
     def show(self):
         win.blit(self.gameBoard, (0, 0))
         win.blit(self.shop.wooden_button.sprite.image, (250, 40))
+        win.blit(self.end_turn_button.sprite.image, (750, 12))
         self.placeCards()
         self.showCards()
         self.showPlayersStats()
