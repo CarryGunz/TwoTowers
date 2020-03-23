@@ -66,6 +66,16 @@ class GameButton:
         m_x, m_y = pygame.mouse.get_pos()
         return self.sprite.checkMouseOn(m_x, m_y)
 
+class Timer:
+    def __init__(self):
+        self.start_time = pygame.time.get_ticks()
+
+    def getSeconds(self):
+        return (pygame.time.get_ticks() - self.start_time)/1000
+
+    def restart(self):
+        self.start_time = pygame.time.get_ticks()
+
 class Game(State):
     def __init__(self):
         self.current_state = 2
@@ -88,6 +98,9 @@ class Game(State):
         self.computer.opponent = self.player
         self.shop.player = self.player
         self.shop.computer = self.computer
+
+        self.timer = Timer()
+        self.end_turn = False
         # </GameThings>
         # <GameButtons>
         self.end_turn_button = GameButton(Sprite.Sprite(pygame.image.load('images/EndTurnButton.png')), 750, 12)
@@ -214,6 +227,9 @@ class Game(State):
         win.blit(player1_hp, (36, 620))
         win.blit(player1_gold, (36, 660))
 
+        player1_timer_info = font.render(f'{self.timer.getSeconds()}', True, white)
+        win.blit(player1_timer_info, (610, 33))
+
         # Вывод информации о компьютере
         AI_name = font.render('Ваш противник', True, white)
         AI_hp = font.render('Прочность: ' + str(self.computer.tower.height), True, white)
@@ -232,7 +248,6 @@ game_state = Menu()
 pygame.init()
 win = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
-
 def main():
     global game_state
     game_started = True
@@ -249,9 +264,6 @@ def main():
 
 
         for event in pygame.event.get():
-            #for card in player.cards:
-            #   if card.movableImg():
-            #       player.cards.remove(card)
             if event.type == pygame.QUIT:
                 game_started = False
 
@@ -262,19 +274,23 @@ def main():
                     game_state.checkCardsOnClick()
                     game_state.shop.wooden_button.isClick()
                     if game_state.end_turn_button.isMouseOn():
-                        game_state.computer.TurnAI()
-                        game_state.player.player_gold += 1
-                        game_state.computer.player_gold += 1
+                        game_state.end_turn = True
 
             if event.type == pygame.MOUSEMOTION:
                 if game_state.current_state == 2:  # Game
                     game_state.moveCardOnHand()
-                #if event.button == 1:
-                #    if game_state.current_state == 0:
-                #        game_state.checkButtonClick()
-                #       if game_state.current_state == 1:
-                #            game_state = Game()
-                #            game_state.placeCards()
+
+        if game_state.current_state == 2:  # Game
+            if game_state.timer.getSeconds() >= 20:
+                game_state.end_turn = True
+
+            if game_state.end_turn:
+                game_state.computer.TurnAI()
+                game_state.player.player_gold += 1
+                game_state.computer.player_gold += 1
+                game_state.timer.restart()
+                game_state.end_turn = False
+
 
 
 main()

@@ -70,8 +70,9 @@ class AI:
                         if max_effect.effect_power < effect.effect_power:
                             max_effect = effect
                             max_effect_card = card
-
-            max_effect_card.useCard()
+            if max_effect_card != None:
+                max_effect_card.useCard()
+                print('Was no card in AI!')
             return
         else:
             for card in self.cards:
@@ -86,5 +87,7 @@ class AI:
                             max_effect = effect
                             max_effect_card = card
 
-            max_effect_card.useCard()
+            if max_effect_card != None:
+                max_effect_card.useCard()
+                print('Was no card in AI!')
             return
