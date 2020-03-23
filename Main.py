@@ -82,7 +82,7 @@ class Game(State):
         self.card_on_hand = None
 
         # <Sprites> Спрайты
-        self.towerSprite = None
+
         self.gameBoard = pygame.image.load('images/gameBoard.png')
 
         # </Sprites>
@@ -90,10 +90,10 @@ class Game(State):
         # <GameThings> Разное
         self.shop = Shop.Shop()
         self.computer = AI.AI(self.shop)
-        self.computer.tower = Tower.Tower(self.computer, self.towerSprite)
+        self.computer.tower = Tower.Tower(self.computer, False)
 
         self.player = Player.Player("abc", self.shop, self.computer)
-        self.player.tower = Tower.Tower(self.player, self.towerSprite)
+        self.player.tower = Tower.Tower(self.player, True)
 
         self.computer.opponent = self.player
         self.shop.player = self.player
@@ -204,8 +204,13 @@ class Game(State):
 
     def show(self):
         win.blit(self.gameBoard, (0, 0))
-        win.blit(self.shop.wooden_button.sprite.image, (250, 40))
+        win.blit(self.shop.wooden_button.sprite.image, (233, 32))
+        win.blit(self.shop.bronze_button.sprite.image, (305, 32))
+        win.blit(self.shop.silver_button.sprite.image, (377, 32))
         win.blit(self.end_turn_button.sprite.image, (750, 12))
+
+        self.player.tower.showTower(win)
+        self.computer.tower.showTower(win)
         self.placeCards()
         self.showCards()
         self.showPlayersStats()
@@ -273,6 +278,8 @@ def main():
                 elif game_state.current_state == 2: #Game
                     game_state.checkCardsOnClick()
                     game_state.shop.wooden_button.isClick()
+                    game_state.shop.bronze_button.isClick()
+                    game_state.shop.silver_button.isClick()
                     if game_state.end_turn_button.isMouseOn():
                         game_state.end_turn = True
 

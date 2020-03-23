@@ -73,6 +73,8 @@ def addAttackEffect(owner, damage):
 
 def addRepairEffect(owner, repair_effect):
     owner.tower.height = owner.tower.height + repair_effect
+    if owner.tower.height > 100:
+        owner.tower.height = 100
 
 #Сделать...
 def addCreateBuildingEffect(owner, building_type):

@@ -28,7 +28,7 @@ class ShopButton:
     def isClick(self):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
-        print(mouse[0], mouse[1])
+        print(self.button_type)
         if click[0] == 1 and self.sprite.x + self.sprite.width > mouse[0] > \
                 self.sprite.x and self.sprite.y + self.sprite.height > \
                 mouse[1] > self.sprite.y:
@@ -43,7 +43,11 @@ class Shop:
         self.player = None
         self.computer = None
         self.wooden_button = ShopButton(Sprite.Sprite(pygame.image.load('images/WoodenButton.png')),
-                                        WOODEN, self, 250, 40)
+                                        WOODEN, self, 233, 32)
+        self.bronze_button = ShopButton(Sprite.Sprite(pygame.image.load('images/BronzeButton.png')),
+                                        BRONZE, self, 305, 32)
+        self.silver_button = ShopButton(Sprite.Sprite(pygame.image.load('images/SilverButton.png')),
+                                        SILVER, self, 377, 32)
 
     def buyCard(self, card_type):
         # 1,2,4,8 - ÷ены за карты
@@ -52,9 +56,11 @@ class Shop:
             self.player.cards.append(AllCards.wooden_cards[random.randint(0, 1)].cloneCard())
             self.player.player_gold -= 1
         elif card_type == BRONZE and self.player.player_gold >= 2:
-            pass
+            self.player.cards.append(AllCards.bronze_cards[random.randint(0, 1)].cloneCard())
+            self.player.player_gold -= 2
         elif card_type == SILVER and self.player.player_gold >= 4:
-            pass
+            self.player.cards.append(AllCards.silver_cards[random.randint(0, 1)].cloneCard())
+            self.player.player_gold -= 4
         elif card_type == GOLDEN and self.player.player_gold >= 8:
             pass
         self.player.setPlayerCardsOwner()
