@@ -61,6 +61,11 @@ class GameButton:
         self.sprite = sprite
         self.sprite.x = button_x
         self.sprite.y = button_y
+
+    def isMouseOn(self):
+        m_x, m_y = pygame.mouse.get_pos()
+        return self.sprite.checkMouseOn(m_x, m_y)
+
 class Game(State):
     def __init__(self):
         self.current_state = 2
@@ -256,11 +261,14 @@ def main():
                 elif game_state.current_state == 2: #Game
                     game_state.checkCardsOnClick()
                     game_state.shop.wooden_button.isClick()
+                    if game_state.end_turn_button.isMouseOn():
+                        game_state.computer.TurnAI()
+                        game_state.player.player_gold += 1
+                        game_state.computer.player_gold += 1
 
             if event.type == pygame.MOUSEMOTION:
                 if game_state.current_state == 2:  # Game
                     game_state.moveCardOnHand()
-
                 #if event.button == 1:
                 #    if game_state.current_state == 0:
                 #        game_state.checkButtonClick()

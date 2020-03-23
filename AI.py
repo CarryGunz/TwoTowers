@@ -11,6 +11,12 @@ class AI:
         self.turnIncome = 1
         self.opponent = None
 
+    def setCardsOwner(self):
+        for card in self.cards:
+            card.owner = self
+            for effect in card.effects:
+                effect.setOwner(self)
+
     def TurnAI(self):
         #Buy cards
 
@@ -46,6 +52,8 @@ class AI:
             self.cards.append(AllCards.wooden_cards[random.randint(0, len(AllCards.wooden_cards)-1)].cloneCard())
             pass
 
+        self.setCardsOwner()
+
         #Use cards
         k = 100 - self.tower.height  # 100 - max height
         max_effect = None
@@ -68,7 +76,7 @@ class AI:
         else:
             for card in self.cards:
                 for effect in card.effects:
-                    if effect.effect == Card.Card.addAttackEffect:
+                    if effect.effect == Card.addAttackEffect:
                         if max_effect == None:
                             max_effect = effect
                             max_effect_card = card

@@ -10,6 +10,7 @@ class Player:
         self.shop = _shop
         self.turnIncome = 1
         self.opponent = _opponent
+
     def setPlayerCardsOwner(self):
         for card in self.cards:
             card.owner = self
