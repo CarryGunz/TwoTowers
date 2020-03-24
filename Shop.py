@@ -53,13 +53,13 @@ class Shop:
         # 1,2,4,8 - Öåíû çà êàğòû
 
         if card_type == WOODEN and self.player.player_gold >= 1:
-            self.player.cards.append(AllCards.wooden_cards[random.randint(0, 1)].cloneCard())
+            self.player.cards.append(AllCards.wooden_cards[random.randint(0, len(AllCards.wooden_cards)-1)].cloneCard())
             self.player.player_gold -= 1
         elif card_type == BRONZE and self.player.player_gold >= 2:
-            self.player.cards.append(AllCards.bronze_cards[random.randint(0, 1)].cloneCard())
+            self.player.cards.append(AllCards.bronze_cards[random.randint(0, len(AllCards.bronze_cards)-1)].cloneCard())
             self.player.player_gold -= 2
         elif card_type == SILVER and self.player.player_gold >= 4:
-            self.player.cards.append(AllCards.silver_cards[random.randint(0, 1)].cloneCard())
+            self.player.cards.append(AllCards.silver_cards[random.randint(0, len(AllCards.silver_cards)-1)].cloneCard())
             self.player.player_gold -= 4
         elif card_type == GOLDEN and self.player.player_gold >= 8:
             pass

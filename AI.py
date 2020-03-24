@@ -8,9 +8,9 @@ class AI:
         self.buildings = []
         self.player_gold = 3
         self.shop = shop
-        self.turnIncome = 1
+        self.turn_income = 1
         self.opponent = None
-
+        self.turn_cards_played = 0
     def setCardsOwner(self):
         for card in self.cards:
             card.owner = self

@@ -8,8 +8,9 @@ class Player:
         self.buildings = []
         self.player_gold = 3
         self.shop = _shop
-        self.turnIncome = 1
+        self.turn_income = 1
         self.opponent = _opponent
+        self.turn_cards_played = 0
 
     def setPlayerCardsOwner(self):
         for card in self.cards:

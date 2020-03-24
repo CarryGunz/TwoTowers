@@ -3,13 +3,14 @@ import Player
 import pygame
 import copy
 class CardEffect:
-    def __init__(self, owner, effect_power, effect):
-        self.owner = owner
+    def __init__(self, effect_power, effect):
+        self.owner = None
         self.effect_power = effect_power
         self.effect = effect
 
     def activateEffect(self):
         self.effect(self.owner, self.effect_power)
+
     def setOwner(self, owner):
         self.owner = owner
         self.owner.opponent = owner.opponent
@@ -28,8 +29,10 @@ class Card:
 
 
     def useCard(self):
-        for effect in self.effects:
-            effect.activateEffect()
+
+            self.owner.turn_cards_played += 1
+            for effect in self.effects:
+                effect.activateEffect()
 
     def addCardEffect(self, card_effect):
         self.effects.append(card_effect)
@@ -37,13 +40,13 @@ class Card:
     def isClick(self):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
-
-        if click[0] == 1 and self.sprite.x + self.sprite.width > mouse[0] >\
-                self.sprite.x and self.sprite.y + self.sprite.height >\
-                mouse[1] > self.sprite.y:
-            return True
-        else:
-            return False
+        if self.owner.turn_cards_played < 2:
+            if click[0] == 1 and self.sprite.x + self.sprite.width > mouse[0] >\
+                    self.sprite.x and self.sprite.y + self.sprite.height >\
+                    mouse[1] > self.sprite.y:
+                return True
+            else:
+                return False
 
     def move(self):
         mouse = pygame.mouse.get_pos()

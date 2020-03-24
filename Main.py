@@ -243,9 +243,9 @@ class Game(State):
         win.blit(AI_hp, (1111, 620))
         win.blit(AI_gold, (1111, 660))
     def getStartCards(self):
-        self.player.cards.append(AllCards.wooden_cards[random.randint(0,1)].cloneCard())
-        self.player.cards.append(AllCards.wooden_cards[random.randint(0,1)].cloneCard())
-        self.player.cards.append(AllCards.wooden_cards[random.randint(0,1)].cloneCard())
+        self.player.cards.append(AllCards.wooden_cards[random.randint(0, len(AllCards.wooden_cards)-1)].cloneCard())
+        self.player.cards.append(AllCards.wooden_cards[random.randint(0, len(AllCards.wooden_cards)-1)].cloneCard())
+        self.player.cards.append(AllCards.wooden_cards[random.randint(0, len(AllCards.wooden_cards)-1)].cloneCard())
         self.player.setPlayerCardsOwner()
 
 game_state = Menu()
@@ -292,9 +292,11 @@ def main():
                 game_state.end_turn = True
 
             if game_state.end_turn:
+                game_state.player.turn_cards_played = 0
+                game_state.computer.turn_cards_played = 0
                 game_state.computer.TurnAI()
-                game_state.player.player_gold += 1
-                game_state.computer.player_gold += 1
+                game_state.player.player_gold += game_state.player.turn_income
+                game_state.computer.player_gold += game_state.computer.turn_income
                 game_state.timer.restart()
                 game_state.end_turn = False
 
