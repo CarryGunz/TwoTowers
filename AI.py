@@ -55,13 +55,39 @@ class AI:
 
         self.setPlayerCardsOwner()
 
-        #Uisng cards
-        use = True
-        for card in self.cards:
-            for effect in card.effects:
-                if effect.effect == Card.addRepairEffect:
-                    if self.tower.height + effect.effect_power > 100:
-                        use = False
-            if use:
-                card.useCard()
-            use = True
+        #Use cards
+        for self.turn_cards_played in range(2):
+            k = 100 - self.tower.height  # 100 - max height
+            max_effect = None
+            max_effect_card = None
+            if k < random.randint(0, 100):# if ... do heal
+                for card in self.cards:
+                    for effect in card.effects:
+                        if effect.effect == Card.addRepairEffect:
+                            if max_effect == None:
+                                max_effect = effect
+                                max_effect_card = card
+                                continue
+
+                            if max_effect.effect_power < effect.effect_power:
+                                max_effect = effect
+                                max_effect_card = card
+                if max_effect_card != None:
+                    max_effect_card.useCard()
+                return
+            else:
+                for card in self.cards:
+                    for effect in card.effects:
+                        if effect.effect == Card.addAttackEffect:
+                            if max_effect == None:
+                                max_effect = effect
+                                max_effect_card = card
+                                continue
+
+                            if max_effect.effect_power < effect.effect_power:
+                                max_effect = effect
+                                max_effect_card = card
+
+                if max_effect_card != None:
+                    max_effect_card.useCard()
+                return
