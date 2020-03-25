@@ -67,11 +67,12 @@ class GameButton:
         return self.sprite.checkMouseOn(m_x, m_y)
 
 class Timer:
-    def __init__(self):
+    def __init__(self, max_value):
         self.start_time = pygame.time.get_ticks()
+        self.max_value = max_value
 
     def getSeconds(self):
-        return (pygame.time.get_ticks() - self.start_time)/1000
+        return int(self.max_value - (pygame.time.get_ticks() - self.start_time)/1000)
 
     def restart(self):
         self.start_time = pygame.time.get_ticks()
@@ -99,7 +100,7 @@ class Game(State):
         self.shop.player = self.player
         self.shop.computer = self.computer
 
-        self.timer = Timer()
+        self.timer = Timer(20)
         self.end_turn = False
         # </GameThings>
         # <GameButtons>
@@ -233,7 +234,7 @@ class Game(State):
         win.blit(player1_gold, (36, 660))
 
         player1_timer_info = font.render(f'{self.timer.getSeconds()}', True, white)
-        win.blit(player1_timer_info, (610, 33))
+        win.blit(player1_timer_info, (625, 33))
 
         # Вывод информации о компьютере
         AI_name = font.render('Ваш противник', True, white)
@@ -247,6 +248,11 @@ class Game(State):
         self.player.cards.append(AllCards.wooden_cards[random.randint(0, len(AllCards.wooden_cards)-1)].cloneCard())
         self.player.cards.append(AllCards.wooden_cards[random.randint(0, len(AllCards.wooden_cards)-1)].cloneCard())
         self.player.setPlayerCardsOwner()
+
+        self.computer.cards.append(AllCards.wooden_cards[random.randint(0, len(AllCards.wooden_cards) - 1)].cloneCard())
+        self.computer.cards.append(AllCards.wooden_cards[random.randint(0, len(AllCards.wooden_cards) - 1)].cloneCard())
+        self.computer.cards.append(AllCards.wooden_cards[random.randint(0, len(AllCards.wooden_cards) - 1)].cloneCard())
+        self.computer.setPlayerCardsOwner()
 
 game_state = Menu()
 
@@ -288,7 +294,7 @@ def main():
                     game_state.moveCardOnHand()
 
         if game_state.current_state == 2:  # Game
-            if game_state.timer.getSeconds() >= 20:
+            if game_state.timer.getSeconds() <= 0:
                 game_state.end_turn = True
 
             if game_state.end_turn:

@@ -11,7 +11,8 @@ class AI:
         self.turn_income = 1
         self.opponent = None
         self.turn_cards_played = 0
-    def setCardsOwner(self):
+
+    def setPlayerCardsOwner(self):
         for card in self.cards:
             card.owner = self
             for effect in card.effects:
@@ -52,42 +53,15 @@ class AI:
             self.cards.append(AllCards.wooden_cards[random.randint(0, len(AllCards.wooden_cards)-1)].cloneCard())
             pass
 
-        self.setCardsOwner()
+        self.setPlayerCardsOwner()
 
-        #Use cards
-        k = 100 - self.tower.height  # 100 - max height
-        max_effect = None
-        max_effect_card = None
-        if k < random.randint(0, 100):# if ... do heal
-            for card in self.cards:
-                for effect in card.effects:
-                    if effect.effect == Card.addRepairEffect:
-                        if max_effect == None:
-                            max_effect = effect
-                            max_effect_card = card
-                            continue
-
-                        if max_effect.effect_power < effect.effect_power:
-                            max_effect = effect
-                            max_effect_card = card
-            if max_effect_card != None:
-                max_effect_card.useCard()
-                print('Was no card in AI!')
-            return
-        else:
-            for card in self.cards:
-                for effect in card.effects:
-                    if effect.effect == Card.addAttackEffect:
-                        if max_effect == None:
-                            max_effect = effect
-                            max_effect_card = card
-                            continue
-
-                        if max_effect.effect_power < effect.effect_power:
-                            max_effect = effect
-                            max_effect_card = card
-
-            if max_effect_card != None:
-                max_effect_card.useCard()
-                print('Was no card in AI!')
-            return
+        #Uisng cards
+        use = True
+        for card in self.cards:
+            for effect in card.effects:
+                if effect.effect == Card.addRepairEffect:
+                    if self.tower.height + effect.effect_power > 100:
+                        use = False
+            if use:
+                card.useCard()
+            use = True
