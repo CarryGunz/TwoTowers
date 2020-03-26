@@ -171,6 +171,7 @@ class Game(State):
 
         for build in self.computer.buildings:
             win.blit(build.sprite.image, (build.sprite.x, build.sprite.y))
+
     def placeCards(self):
         card_interval = 8 - len(self.player.cards)
         top_offset = 568
@@ -260,6 +261,12 @@ class Game(State):
         self.computer.cards.append(AllCards.wooden_cards[random.randint(0, len(AllCards.wooden_cards) - 1)].cloneCard())
         self.computer.setPlayerCardsOwner()
 
+    def usePlayersBuildings(self):
+        for build in self.player.buildings:
+            build.useBuilding()
+        for build in self.computer.buildings:
+            build.useBuilding()
+
 game_state = Menu()
 
 pygame.init()
@@ -304,6 +311,8 @@ def main():
                 game_state.end_turn = True
 
             if game_state.end_turn:
+                game_state.usePlayersBuildings()
+
                 game_state.player.turn_cards_played = 0
                 game_state.computer.turn_cards_played = 0
                 game_state.computer.TurnAI()

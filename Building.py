@@ -14,18 +14,17 @@ class Building:
 
     def placeBuilding(self):
         if self.owner.tower.is_human:
-
-            if len(self.owner.buildings) == 1:
+            if len(self.owner.buildings) == 0:
                 self.sprite.x = 240
                 self.sprite.y = 140
-            if len(self.owner.buildings) == 2:
+            elif len(self.owner.buildings) == 1:
                 self.sprite.x = 240
                 self.sprite.y = 320
-            if len(self.owner.buildings) == 3:
-                self.sprite.x = 400
+            elif len(self.owner.buildings) == 2:
+                self.sprite.x = 440
                 self.sprite.y = 140
-            if len(self.owner.buildings) == 4:
-                self.sprite.x = 400
+            elif len(self.owner.buildings) == 3:
+                self.sprite.x = 440
                 self.sprite.y = 320
             else:
                 return False
@@ -33,6 +32,7 @@ class Building:
 
 
     def useBuilding(self):
+        print(self.owner)
         self.building_effect(self.owner)
 
     def cloneBuilding(self):
@@ -41,7 +41,6 @@ class Building:
 
 def archerTowerEffect(owner):
     owner.opponent.tower.height -= 1
-
 
 def goldMineEffect(owner):
     owner.player_gold += 1

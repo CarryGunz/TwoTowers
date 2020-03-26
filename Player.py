@@ -18,6 +18,7 @@ class Player:
             for effect in card.effects:
                 effect.setOwner(self)
 
+
     def showPlayerBuildings(self, screen):
         for building in self.buildings:
             screen.blit(building.sprite.image, (building.sprite.x, building.sprite.y))
