@@ -165,7 +165,12 @@ class Game(State):
         for card in self.player.cards:
             win.blit(card.sprite.image, (card.sprite.x, card.sprite.y))
 
+    def showBuildings(self):
+        for build in self.player.buildings:
+            win.blit(build.sprite.image, (build.sprite.x, build.sprite.y))
 
+        for build in self.computer.buildings:
+            win.blit(build.sprite.image, (build.sprite.x, build.sprite.y))
     def placeCards(self):
         card_interval = 8 - len(self.player.cards)
         top_offset = 568
@@ -177,7 +182,7 @@ class Game(State):
         x = 0
         for card in self.player.cards:
             if card != self.card_on_hand:
-                #print(card.sprite.x, card.sprite.y)
+
                 card.sprite.x = left_offset + x * (card_interval + card.sprite.image.get_width())
                 card.sprite.y = top_offset
                 x += 1
@@ -193,7 +198,7 @@ class Game(State):
         if self.card_on_hand != None:
             if TABLE_X + TABLE_WIDTH > self.card_on_hand.sprite.x > TABLE_X and TABLE_Y + TABLE_HEIGHT > self.card_on_hand.sprite.y > TABLE_Y:
                 self.card_on_hand.useCard()
-                print(self.card_on_hand.owner)
+
                 #self.all_cards.remove(self.card_on_hand)
                 self.card_on_hand.owner.cards.remove(self.card_on_hand)
             self.card_on_hand = None
@@ -215,6 +220,7 @@ class Game(State):
         self.placeCards()
         self.showCards()
         self.showPlayersStats()
+        self.showBuildings()
         pygame.display.flip()
         pygame.display.update()
 

@@ -28,7 +28,7 @@ class ShopButton:
     def isClick(self):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
-        print(self.button_type)
+
         if click[0] == 1 and self.sprite.x + self.sprite.width > mouse[0] > \
                 self.sprite.x and self.sprite.y + self.sprite.height > \
                 mouse[1] > self.sprite.y:

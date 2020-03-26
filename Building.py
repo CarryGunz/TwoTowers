@@ -1,50 +1,47 @@
-# Класс Здание (Building) назначение - управление и изображение ресурсов
-# Атрибуты: Назначение здания (Typ_building), Стоимость и сила здания (Price_building),
-# Мана здания (Health_building), Изображение здания
-# Методы: Добавить здание, Разрушить здание, Выполнить действие здания, Продать здание
-# Наследуемые классы:
-#   Атакующее здание
-#   Ремонтирующее здание
-#   Специальное здание
-
 import pygame
 import random
 import sys
 import math
+import copy
 
 class Building:
-    price = 0
-    sprite = 0
-    owner = 0
-    def __init__(self):
-        self.price = 0
-        self.sprite = 0
-        self.owner = 0
-    def useBuilding(self):
-        pass
 
-class AttackBuilding(Building):
-    def __init__(self):
-        self.price = price
+    def __init__(self, sprite, effect, id):
         self.sprite = sprite
-        self.owner = owner
-    def useBuilding(self):
-        pass
+        self.owner = None
+        self.building_effect = effect
+        self.id = id
 
-class RepairBuilding(Building):
-    def __init__(self):
-        self.price = price
-        self.sprite = sprite
-        self.owner = owner
-    def useBuilding(self):
-        pass
+    def placeBuilding(self):
+        if self.owner.tower.is_human:
 
-class SpecialBuilding(Building):
-    using_ref = 0
-    def __init__(self):
-        self.price = price
-        self.sprite = sprite
-        self.owner = owner
-        self.using_ref = using_ref
+            if len(self.owner.buildings) == 1:
+                self.sprite.x = 240
+                self.sprite.y = 140
+            if len(self.owner.buildings) == 2:
+                self.sprite.x = 240
+                self.sprite.y = 320
+            if len(self.owner.buildings) == 3:
+                self.sprite.x = 400
+                self.sprite.y = 140
+            if len(self.owner.buildings) == 4:
+                self.sprite.x = 400
+                self.sprite.y = 320
+            else:
+                return False
+
+
+
     def useBuilding(self):
-        pass
+        self.building_effect(self.owner)
+
+    def cloneBuilding(self):
+        new_build = Building(copy.copy(self.sprite), self.building_effect, self.id)
+        return new_build
+
+def archerTowerEffect(owner):
+    owner.opponent.tower.height -= 1
+
+
+def goldMineEffect(owner):
+    owner.player_gold += 1
