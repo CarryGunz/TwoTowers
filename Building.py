@@ -17,15 +17,38 @@ class Building:
             if len(self.owner.buildings) == 0:
                 self.sprite.x = 240
                 self.sprite.y = 140
+                return True
             elif len(self.owner.buildings) == 1:
                 self.sprite.x = 240
                 self.sprite.y = 320
+                return True
             elif len(self.owner.buildings) == 2:
                 self.sprite.x = 440
                 self.sprite.y = 140
+                return True
             elif len(self.owner.buildings) == 3:
                 self.sprite.x = 440
                 self.sprite.y = 320
+                return True
+            else:
+                return False
+        else:
+            if len(self.owner.buildings) == 0:
+                self.sprite.x = 670
+                self.sprite.y = 140
+                return True
+            elif len(self.owner.buildings) == 1:
+                self.sprite.x = 670
+                self.sprite.y = 320
+                return True
+            elif len(self.owner.buildings) == 2:
+                self.sprite.x = 870
+                self.sprite.y = 140
+                return True
+            elif len(self.owner.buildings) == 3:
+                self.sprite.x = 870
+                self.sprite.y = 320
+                return True
             else:
                 return False
 

@@ -39,9 +39,12 @@ class Card:
 
         if self.is_building:
             self.card_building.owner = self.owner
-            self.card_building.placeBuilding()
-            self.owner.buildings.append(self.card_building.cloneBuilding())
-            self.owner.buildings[-1].owner = self.owner
+            if self.card_building.placeBuilding():
+                self.card_building.placeBuilding()
+                self.owner.buildings.append(self.card_building.cloneBuilding())
+                self.owner.buildings[-1].owner = self.owner
+            else:
+                self.owner.player_gold += 1
 
 
         for effect in self.effects:

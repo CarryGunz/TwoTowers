@@ -19,6 +19,11 @@ class AI:
                 effect.setOwner(self)
 
     def TurnAI(self):
+
+        x = random.randint(0, 100)
+        if x < 65:
+            return
+
         #Buy cards
 
         rest = self.player_gold % 8
@@ -74,20 +79,23 @@ class AI:
                                 max_effect_card = card
                 if max_effect_card != None:
                     max_effect_card.useCard()
-                return
             else:
-                for card in self.cards:
-                    for effect in card.effects:
-                        if effect.effect == Card.addAttackEffect:
-                            if max_effect == None:
-                                max_effect = effect
-                                max_effect_card = card
-                                continue
+                if random.randint(0, 2) > 1:
+                    for card in self.cards:
+                        for effect in card.effects:
+                            if effect.effect == Card.addAttackEffect:
+                                if max_effect == None:
+                                    max_effect = effect
+                                    max_effect_card = card
+                                    continue
 
-                            if max_effect.effect_power < effect.effect_power:
-                                max_effect = effect
-                                max_effect_card = card
-
-                if max_effect_card != None:
-                    max_effect_card.useCard()
-                return
+                                if max_effect.effect_power < effect.effect_power:
+                                    max_effect = effect
+                                    max_effect_card = card
+                    if max_effect_card != None:
+                        max_effect_card.useCard()
+                else:
+                    for card in self.cards:
+                        if card.is_building:
+                            card.useCard()
+                            break

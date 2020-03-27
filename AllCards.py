@@ -56,5 +56,5 @@ card11.is_building = True
 
 
 wooden_cards = [card1, card2, card7, card10]
-bronze_cards = [card3, card4, card8, card11]
+bronze_cards = [card3, card4, card8]
 silver_cards = [card5, card6, card9]
