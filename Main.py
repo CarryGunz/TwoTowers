@@ -215,8 +215,8 @@ class Game(State):
         win.blit(self.shop.bronze_button.sprite.image, (305, 32))
         win.blit(self.shop.silver_button.sprite.image, (377, 32))
         win.blit(self.end_turn_button.sprite.image, (750, 12))
-        win.blit(self.delete_card_button.sprite.image, (self.delete_card_button.sprite.x, \
-                                                self.delete_card_button.sprite.y))
+        win.blit(self.delete_card_button.sprite.image, (self.delete_card_button.sprite.x,
+                                                        self.delete_card_button.sprite.y))
 
         self.player.tower.showTower(win)
         self.computer.tower.showTower(win)
@@ -238,14 +238,14 @@ class Game(State):
         player1_name = font.render('Ваша башня', True, white)
         player1_hp = font.render('Прочность: ' + str(self.player.tower.height), True, white)
         player1_gold = font.render('Золото: ' + str(self.player.player_gold), True, yellow)
-        player1_cards_amount = font.render(f'Карты: {len(self.player.cards)}/7', True, yellow)
-        player1_amount_of_used_cards1 = font.render('Использовано', True, yellow)
-        player1_amount_of_used_cards2 = font.render(f'    карт: {self.player.turn_cards_played}/2', True, yellow)
+        player1_cards_amount = font.render(f'Карты: {len(self.player.cards)}/7', True, white)
+        player1_amount_of_used_cards1 = font.render('Использовано', True, white)
+        player1_amount_of_used_cards2 = font.render(f'карт: {self.player.turn_cards_played}/2', True, white)
         win.blit(player1_name, (35, 580))
         win.blit(player1_hp, (36, 600))
-        win.blit(player1_amount_of_used_cards1, (36, 620))
-        win.blit(player1_amount_of_used_cards2, (36, 640))
-        win.blit(player1_gold, (36, 660))
+        win.blit(player1_gold, (36, 620))
+        win.blit(player1_amount_of_used_cards1, (36, 640))
+        win.blit(player1_amount_of_used_cards2, (36, 660))
         win.blit(player1_cards_amount, (36, 680))
 
         player1_timer_info = font.render(f'{self.timer.getSeconds()}', True, white)
